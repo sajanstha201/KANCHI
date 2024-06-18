@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Record and Send Audio</title>
+    <script src="https://cdn.webrtc-experiment.com/RecordRTC.js"></script>
+        <link rel="stylesheet" type="text/css" href="./style.css">
+    
+</head>
+<body>
+    <div class="container">
+        <h1>KANCHI</h1>
+        <div id="startRecordButton" onclick="startRecording()">
+            <img src="./images/mic.png">
+        </div>
+
+        <div id="recording">
+            <div class="dcontainer">
+                <div class="dot" style="position:absolute;left:20px"></div>
+                <div class="dot" style="position:absolute;left:40px"></div>
+                <div class="dot" style="position:absolute;left:60px"></div>
+                <div class="dot" style="position:absolute;left:80px"></div>
+            </div>
+            <p class="listening-text">Listening...</p>
+            <button id="stopRecording" onclick="stopRecording()">Stop Listening</button>
+        </div>
+
+        <div id="loader"></div>
+
+        <div id="speaking">
+            <img src="./images/speaker.png">
+        </div>
+        <div id="receivedAudio" style="display: none;">
+        </div>
+
+       <!--<button id="startRecordButton">Start Recording</button> 
+        <button id="stopRecordButton" disabled>Stop Recording</button>
+        <button id="sendButton" disabled>Send to API</button>
+        <p id="statusMessage"></p>
+        --> 
+    </div>
+
+
+
+    <script src="./script.js">
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
