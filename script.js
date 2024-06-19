@@ -2,8 +2,9 @@ let recorder;
 let audioBlob;
 const voiceIndicators = document.getElementById('voiceIndicators');
 let receivedAudio;
-
+let kanchiRecording;
 const startRecording = async () => {
+    kanchiRecording=true
     document.getElementById('startRecordButton').style.display='none'
     document.getElementById('recording').style.display='flex'
     try {
@@ -53,15 +54,21 @@ function startVAD(stream) {
 
         if (rms < silenceThreshold) {
             // Silence detected, stop recording
-            stopRecording();
+            if(kanchiRecording){
+                stopRecording();
+            }
         } else {
             // Continue checking
-            setTimeout(checkForSilence, 3000); // Check every 100ms (adjust as needed)
+            if(kanchiRecording){
+                setTimeout(checkForSilence, 3000);
+            }
+             // Check every 100ms (adjust as needed)
         }
     }
     checkForSilence()
 }
 const stopRecording =() => {
+    kanchiRecording=false;
     document.getElementById('recording').style.display='none'
     document.getElementById('loader').style.display='flex';
     recorder.stopRecording(() => {
@@ -99,10 +106,9 @@ const sendAudioToAPI = () => {
         receivedAudio.autoplay = true;
         document.getElementById('loader').style.display='none';
         document.getElementById('speaking').style.display='flex';
+        document.getElementById('receivedAudio').appendChild(receivedAudio)
         receivedAudio.addEventListener('ended', () => {
-            console.log('Audio playback ended.');
-            document.getElementById('startRecordButton').style.display='flex';
-            document.getElementById('speaking').style.display='none';
+            stopPlaying()
         });
     }).catch(error => {
         console.error('Error receiving or processing audio:', error);
@@ -110,6 +116,14 @@ const sendAudioToAPI = () => {
     });
 }
 
+
+const stopPlaying=()=>{
+    receivedAudio.pause();
+    console.log('Audio playback ended.');
+    document.getElementById('startRecordButton').style.display='flex';
+    document.getElementById('speaking').style.display='none';
+    kanchiRecording=false;
+}
 //document.getElementById('startRecordButton').addEventListener('click', startRecording);
 //document.getElementById('stopRecordButton').addEventListener('click', stopRecording);
 //document.getElementById('sendButton').addEventListener('click', sendAudioToAPI);
